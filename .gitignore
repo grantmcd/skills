@@ -1,0 +1,1 @@
+.env\n*.log\nnode_modules/\nvendor/\nsecrets/\n*.key\n*.pem
