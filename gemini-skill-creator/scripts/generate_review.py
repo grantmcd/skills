@@ -17,7 +17,7 @@ def generate_review(workspace_dir, output_file):
         benchmark = json.load(f)
 
     # Load template
-    template_path = os.path.join(os.path.dirname(__file__), "viewer.html")
+    template_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "ui", "viewer.html")
     with open(template_path, "r") as f:
         template = f.read()
 
