@@ -64,9 +64,5 @@ To run checks locally:
 
 ## 🤝 Contributing
 
-We welcome community contributions! Please ensure all new skills include:
-1.  A `SKILL.md` file with valid frontmatter.
-2.  An `evals/evals.json` file for automated verification.
-3.  Passing results from `./check.sh`.
+We welcome community contributions! Please see our [Contributing Guide](./CONTRIBUTING.md) for details on how to add new skills or improve existing ones.
 
-Explore more skills at [skills.sh](https://skills.sh).
