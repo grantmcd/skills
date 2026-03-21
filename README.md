@@ -17,10 +17,10 @@ This repository features two powerful meta-skills designed to help you build and
 The easiest way to install these skills across all your agents simultaneously is using the [skills CLI](https://github.com/vercel-labs/skills):
 
 ```bash
-# Install the Skill Creator
-npx skills add grantmcd/skills/gemini-skill-creator
+# Interactively choose which skills to install from this repository
+npx skills add grantmcd/skills
 
-# Install the Skill Evolver
+# OR explicitly install a specific skill directly
 npx skills add grantmcd/skills/skill-evolver
 ```
 
