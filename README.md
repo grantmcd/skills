@@ -1,6 +1,6 @@
 # Agent Skills
 
-A collection of specialized, high-quality, and objectively evaluated skills for AI agents. These skills follow the [Agent Skills](https://skills.sh) open standard managed by the [skills CLI](https://github.com/vercel-labs/skills) and are compatible with **Claude Code**, **GitHub Copilot**, **Gemini CLI**, **Kiro**, and other modern AI coding tools.
+A collection of specialized, high-quality, and objectively evaluated skills for AI agents. These skills follow the [Agent Skills](https://agentskills.io/) open standard managed by the [skills CLI](https://github.com/vercel-labs/skills) and are compatible with **Claude Code**, **GitHub Copilot**, **Gemini CLI**, **Kiro**, and other modern AI coding tools.
 
 ## 🛠 Core Meta-Skills
 
