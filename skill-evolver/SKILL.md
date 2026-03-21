@@ -8,11 +8,13 @@ description: "A meta-skill that proactively reflects on the effectiveness of oth
 A meta-skill that proactively reflects on the effectiveness of other agent skills.
 
 ## Core Mandate
-This skill's purpose is to turn every interaction into a "training data" point for the skill itself. It enforces a rigorous cycle of:
+This skill's purpose is to turn every interaction into a "training data" point for the skill itself. It enforces the [Agent Skills](https://agentskills.io/) open standard and follows a rigorous cycle of:
 1.  **Post-Mortem Analysis**: Triggered automatically after a "Directive" is completed.
 2.  **Instruction Gap Detection**: Identifying where the agent struggled.
 3.  **Sandboxed Refinement**: ALL reflection analysis and test executions MUST be performed in a clean, isolated temporary workspace (e.g., `.gemini/tmp/evals/<skill-name>`) to prevent repository pollution.
 4.  **Interactive Validation**: Generating an interactive review for the human user to approve or reject the proposed changes before they are applied.
+
+**IMPORTANT**: All refinements MUST conform to the latest specification and best practices at **[agentskills.io](https://agentskills.io/)**.
 
 ---
 
