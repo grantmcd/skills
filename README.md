@@ -24,8 +24,6 @@ npx skills add grantmcd/skills/gemini-skill-creator
 npx skills add grantmcd/skills/skill-evolver
 ```
 
-Explore more skills at [skills.sh](https://skills.sh).
-
 ### 2. Tool-Specific Usage
 
 | Tool | Installation Path | Command / Prefix |
