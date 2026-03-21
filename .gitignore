@@ -1,2 +1,10 @@
-.env\n*.log\nnode_modules/\nvendor/\nsecrets/\n*.key\n*.pem
+.env
+*.log
 node_modules/
+vendor/
+secrets/
+*.key
+*.pem
+
+# Gemini CLI temporary files and sandbox evals
+.gemini/tmp/
