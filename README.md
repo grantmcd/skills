@@ -18,10 +18,10 @@ The easiest way to install these skills across all your agents simultaneously is
 
 ```bash
 # Interactively choose which skills to install from this repository
-npx skills add grantmcd/skills
+npx skills add https://github.com/grantmcd/skills
 
 # OR explicitly install a specific skill directly
-npx skills add grantmcd/skills/skill-evolver
+npx skills add https://github.com/grantmcd/skills --skill skill-evolver
 ```
 
 ### 2. Tool-Specific Usage
