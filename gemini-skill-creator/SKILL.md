@@ -2,6 +2,7 @@
 name: gemini-skill-creator
 description: "A meta-skill for designing, testing, and objectively evaluating high-quality specialized skills for the Gemini CLI and other AI agents. Make sure to use this skill whenever the user mentions 'creating a skill', 'automating a workflow', or 'improving an agent capability', even if they don't explicitly ask for an 'evaluation' or 'review UI'."
 ---
+
 # gemini-skill-creator
 
 A meta-skill for designing, testing, and objectively evaluating high-quality specialized skills for the Gemini CLI and other AI agents.
