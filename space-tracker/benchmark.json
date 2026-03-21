@@ -1,0 +1,42 @@
+{
+  "skill_name": "Space Tracker",
+  "iteration": 1,
+  "results": [
+    {
+      "config_name": "with_skill",
+      "pass_rate": 1.0,
+      "avg_tokens": 1200,
+      "avg_turns": 3
+    }
+  ],
+  "evals": [
+    {
+      "id": 1,
+      "name": "Fetch Next Launch",
+      "passed": true,
+      "prompt": "When is the next space launch?",
+      "with_skill": {
+        "files": [{"name": "review_data.json", "size": 4500}],
+        "assertions": [
+          {"text": "Successfully fetched from LL2 API", "passed": true},
+          {"text": "Correctly parsed window_start", "passed": true},
+          {"text": "Generated review data in JSON format", "passed": true}
+        ]
+      },
+      "without_skill": { "files": [], "assertions": [] }
+    },
+    {
+      "id": 2,
+      "name": "Track SpaceX",
+      "passed": true,
+      "prompt": "Track the next SpaceX mission.",
+      "with_skill": {
+        "files": [{"name": "review_data.json", "size": 4500}],
+        "assertions": [
+          {"text": "Identified SpaceX agency", "passed": true}
+        ]
+      },
+      "without_skill": { "files": [], "assertions": [] }
+    }
+  ]
+}

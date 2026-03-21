@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill Evaluation Review - Space Tracker</title>
+    <style>
+      :root {
+        --bg-color: #1e1e1e;
+        --text-color: #d4d4d4;
+        --card-bg: #2d2d2d;
+        --accent: #007acc;
+        --success: #4caf50;
+        --fail: #f44336;
+      }
+      body {
+        font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        background: var(--bg-color);
+        color: var(--text-color);
+        margin: 0;
+        padding: 20px;
+      }
+      .container { max-width: 1200px; margin: 0 auto; }
+      header { border-bottom: 1px solid #444; padding-bottom: 10px; margin-bottom: 20px; }
+      .eval-card { background: var(--card-bg); border-radius: 8px; padding: 20px; margin-bottom: 30px; border-left: 5px solid var(--accent); }
+      .eval-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #444; padding-bottom: 10px; margin-bottom: 15px; }
+      .prompt { font-style: italic; color: #aaa; margin-bottom: 20px; background: #252526; padding: 10px; border-radius: 4px; }
+      .comparison { display: grid; grid-template-columns: 1fr; gap: 20px; }
+      .column { background: #252526; padding: 15px; border-radius: 4px; }
+      .column h3 { margin-top: 0; color: var(--accent); }
+      .assertion { display: flex; align-items: center; margin-bottom: 8px; }
+      .assertion .status { margin-right: 10px; font-weight: bold; }
+      .status.pass { color: var(--success); }
+      .status.fail { color: var(--fail); }
+      pre { background: #1e1e1e; padding: 10px; border-radius: 4px; overflow-x: auto; font-size: 13px; max-height: 400px; }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Skill Evaluation Review: Space Tracker</h1>
+        <p>Iteration: 1 | Overall Pass Rate: 100%</p>
+      </header>
+
+      <div class="eval-card">
+        <div class="eval-header">
+          <h2>Eval 1: Fetch Next Launch</h2>
+          <div class="summary">Status: <span class="status pass">PASSED</span></div>
+        </div>
+        <div class="prompt"><strong>Prompt:</strong> When is the next space launch?</div>
+        <div class="comparison">
+          <div class="column">
+            <h3>With Skill</h3>
+            <div class="assertions">
+              <strong>Assertions:</strong>
+              <div class="assertion"><span class="status pass">✓</span><span>Successfully fetched from LL2 API</span></div>
+              <div class="assertion"><span class="status pass">✓</span><span>Correctly parsed window_start</span></div>
+              <div class="assertion"><span class="status pass">✓</span><span>Generated review data in JSON format</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="eval-card">
+        <div class="eval-header">
+          <h2>Eval 2: Track SpaceX</h2>
+          <div class="summary">Status: <span class="status pass">PASSED</span></div>
+        </div>
+        <div class="prompt"><strong>Prompt:</strong> Track the next SpaceX mission.</div>
+        <div class="comparison">
+          <div class="column">
+            <h3>With Skill</h3>
+            <div class="assertions">
+              <strong>Assertions:</strong>
+              <div class="assertion"><span class="status pass">✓</span><span>Identified SpaceX agency</span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
