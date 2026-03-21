@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Skill Evolution Review</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --bg-color: #0d1117;
+        --sidebar-bg: #161b22;
+        --card-bg: #1c2128;
+        --text-primary: #c9d1d9;
+        --text-secondary: #8b949e;
+        --accent: #58a6ff;
+        --success: #3fb950;
+        --fail: #f85149;
+        --warning: #d29922;
+        --border: #30363d;
+        --code-bg: #010409;
+      }
+
+      body {
+        font-family: 'Inter', sans-serif;
+        background: var(--bg-color);
+        color: var(--text-primary);
+        margin: 0;
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      /* Sidebar */
+      aside {
+        width: 320px;
+        background: var(--sidebar-bg);
+        border-right: 1px solid var(--border);
+        display: flex;
+        flex-direction: column;
+        padding: 24px;
+      }
+
+      aside h1 {
+        font-size: 1.25rem;
+        margin: 0 0 4px 0;
+        color: var(--accent);
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .iteration-label {
+        font-size: 0.8rem;
+        color: var(--text-secondary);
+        margin-bottom: 24px;
+      }
+
+      .stats-summary {
+        background: rgba(88, 166, 255, 0.1);
+        border: 1px solid rgba(88, 166, 255, 0.2);
+        padding: 16px;
+        border-radius: 8px;
+        margin-bottom: 24px;
+      }
+
+      .stats-row {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 8px;
+        font-size: 0.875rem;
+      }
+
+      .stats-row:last-child {
+        margin-bottom: 0;
+      }
+
+      .eval-list {
+        flex: 1;
+        overflow-y: auto;
+        padding-right: 4px;
+      }
+
+      .eval-item {
+        padding: 12px;
+        margin-bottom: 8px;
+        border-radius: 6px;
+        cursor: pointer;
+        border: 1px solid transparent;
+        transition: all 0.2s;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        font-size: 0.9rem;
+      }
+
+      .eval-item:hover {
+        background: rgba(255, 255, 255, 0.05);
+      }
+
+      .eval-item.active {
+        background: rgba(88, 166, 255, 0.15);
+        border-color: var(--accent);
+      }
+
+      .status-dot {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        flex-shrink: 0;
+        margin-left: 12px;
+      }
+
+      .status-dot.pass {
+        background: var(--success);
+        box-shadow: 0 0 8px var(--success);
+      }
+      .status-dot.fail {
+        background: var(--fail);
+        box-shadow: 0 0 8px var(--fail);
+      }
+
+      /* Main Content */
+      main {
+        flex: 1;
+        padding: 48px;
+        overflow-y: auto;
+        scroll-behavior: smooth;
+      }
+
+      .view-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 32px;
+        border-bottom: 1px solid var(--border);
+        padding-bottom: 24px;
+      }
+
+      .view-header h2 {
+        margin: 0 0 8px 0;
+        font-size: 1.5rem;
+      }
+
+      .view-header p {
+        margin: 0;
+        color: var(--text-secondary);
+        font-size: 0.95rem;
+      }
+
+      .badge {
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.75rem;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .badge.pass {
+        background: rgba(63, 185, 80, 0.15);
+        color: var(--success);
+        border: 1px solid rgba(63, 185, 80, 0.3);
+      }
+      .badge.fail {
+        background: rgba(248, 81, 73, 0.15);
+        color: var(--fail);
+        border: 1px solid rgba(248, 81, 73, 0.3);
+      }
+
+      .section {
+        margin-bottom: 40px;
+      }
+
+      .section h3 {
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: var(--text-secondary);
+        margin-bottom: 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      .card {
+        background: var(--card-bg);
+        border: 1px solid var(--border);
+        border-radius: 8px;
+        padding: 24px;
+      }
+
+      .prompt-text {
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        color: var(--text-primary);
+      }
+
+      .output-box {
+        background: var(--code-bg);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        padding: 20px;
+        font-family: 'JetBrains Mono', monospace;
+        font-size: 0.85rem;
+        line-height: 1.6;
+        white-space: pre-wrap;
+        overflow-x: auto;
+        color: #d1d5db;
+      }
+
+      .assertion-list {
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        margin-top: 24px;
+      }
+
+      .assertion {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        padding: 12px 16px;
+        background: rgba(255, 255, 255, 0.03);
+        border: 1px solid var(--border);
+        border-radius: 6px;
+        font-size: 0.9rem;
+      }
+
+      .assertion.pass {
+        border-left: 4px solid var(--success);
+      }
+      .assertion.fail {
+        border-left: 4px solid var(--fail);
+      }
+
+      .assertion-icon {
+        font-size: 1.1rem;
+        width: 20px;
+        text-align: center;
+      }
+
+      .action-footer {
+        margin-top: 64px;
+        padding: 32px;
+        background: rgba(88, 166, 255, 0.05);
+        border: 1px dashed var(--accent);
+        border-radius: 12px;
+        text-align: center;
+      }
+
+      .action-footer h3 {
+        margin-top: 0;
+        color: var(--accent);
+      }
+
+      .command-box {
+        background: var(--code-bg);
+        padding: 12px 16px;
+        border-radius: 6px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin: 16px 0;
+        border: 1px solid var(--border);
+      }
+
+      .command-box code {
+        font-family: 'JetBrains Mono', monospace;
+        color: var(--success);
+        font-size: 0.9rem;
+      }
+
+      button {
+        background: var(--accent);
+        color: white;
+        border: none;
+        padding: 8px 16px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: opacity 0.2s;
+      }
+
+      button:hover {
+        opacity: 0.9;
+      }
+
+      .copy-btn {
+        background: transparent;
+        border: 1px solid var(--border);
+        padding: 4px 8px;
+        font-size: 0.75rem;
+      }
+
+      [v-cloak] {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="app" style="display: flex; width: 100%" v-cloak>
+      <aside>
+        <h1>
+          <svg
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path>
+          </svg>
+          Evolution Lab
+        </h1>
+        <div class="iteration-label">
+          {{ data.skill_name }} • Iteration {{ data.iteration || 1 }}
+        </div>
+
+        <div class="stats-summary">
+          <div class="stats-row">
+            <span>Pass Rate</span>
+            <span :style="{ color: passRate >= 80 ? 'var(--success)' : 'var(--warning)' }"
+              >{{ passRate }}%</span
+            >
+          </div>
+          <div class="stats-row">
+            <span>Total Evals</span>
+            <span>{{ totalEvals }}</span>
+          </div>
+        </div>
+
+        <div class="eval-list">
+          <div
+            v-for="eval in evals"
+            :key="eval.id"
+            class="eval-item"
+            :class="{ active: currentEvalId === eval.id }"
+            @click="currentEvalId = eval.id"
+          >
+            <span>{{ eval.name }}</span>
+            <span class="status-dot" :class="eval.passed ? 'pass' : 'fail'"></span>
+          </div>
+        </div>
+      </aside>
+
+      <main v-if="currentEval">
+        <div class="view-header">
+          <div>
+            <h2>{{ currentEval.name }}</h2>
+            <p>ID: #{{ currentEval.id }}</p>
+          </div>
+          <span class="badge" :class="currentEval.passed ? 'pass' : 'fail'">
+            {{ currentEval.passed ? 'Passed' : 'Failed' }}
+          </span>
+        </div>
+
+        <div class="section">
+          <h3>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+            </svg>
+            Prompt
+          </h3>
+          <div class="card prompt-text">{{ currentEval.prompt }}</div>
+        </div>
+
+        <div class="section">
+          <h3>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <polyline points="16 18 22 12 16 6"></polyline>
+              <polyline points="8 6 2 12 8 18"></polyline>
+            </svg>
+            Generated Reflection
+          </h3>
+          <div class="output-box">{{ currentEval.output }}</div>
+        </div>
+
+        <div class="section">
+          <h3>
+            <svg
+              width="16"
+              height="16"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+            >
+              <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+              <polyline points="22 4 12 14.01 9 11.01"></polyline>
+            </svg>
+            Assertions
+          </h3>
+          <div class="assertion-list">
+            <div
+              v-for="(ass, idx) in currentEval.assertions"
+              :key="idx"
+              class="assertion"
+              :class="ass.passed ? 'pass' : 'fail'"
+            >
+              <span class="assertion-icon">{{ ass.passed ? '✓' : '✗' }}</span>
+              <span>{{ ass.text }}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="action-footer">
+          <h3>Human Decision Required</h3>
+          <p>
+            If you are satisfied with these evolution results, run the following command to apply
+            the surgical refinements to the skill.
+          </p>
+          <div class="command-box">
+            <code
+              >gemini apply-skill-evolver --skill {{ data.skill_name }} --iteration {{
+              data.iteration || 1 }}</code
+            >
+            <button class="copy-btn" @click="copyCommand">Copy Command</button>
+          </div>
+          <p style="font-size: 0.8rem; color: var(--text-secondary)">
+            Clicking "Approve" will mark this iteration as verified.
+          </p>
+          <button @click="approveIteration">Approve Iteration</button>
+        </div>
+      </main>
+    </div>
+
+    <!-- Vue.js for interactivity without external dependencies (using CDN for demo, but could be local) -->
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <script>
+      const RESULTS_DATA_BASE64 = ''; // Injected by Python script
+      const SESSION_TOKEN = ''; // Injected for secure approval
+
+      const { createApp, ref, computed, onMounted } = Vue;
+
+      createApp({
+        setup() {
+          const data = ref({});
+          const currentEvalId = ref(null);
+          const showDiff = ref(false);
+
+          onMounted(() => {
+            if (RESULTS_DATA_BASE64) {
+              try {
+                const json = atob(RESULTS_DATA_BASE64);
+                const parsed = JSON.parse(json);
+                data.value = parsed;
+
+                let evalsList = [];
+                if (parsed.results && Array.isArray(parsed.results)) {
+                  // Find with_skill config or use first entry
+                  const target =
+                    parsed.results.find((r) => r.config_name === 'with_skill') || parsed.results[0];
+                  evalsList = target.evals || (Array.isArray(target) ? target : [target]);
+                  // Special case for flat results array directly in .results
+                  if (evalsList.length === 0 && Array.isArray(parsed.results)) {
+                    evalsList = parsed.results;
+                  }
+                } else if (parsed.evals) {
+                  evalsList = parsed.evals;
+                }
+
+                data.value.activeResults = evalsList;
+                if (evalsList.length > 0) {
+                  currentEvalId.value = evalsList[0].id;
+                }
+              } catch (e) {
+                console.error('Failed to parse results:', e);
+                data.value = { skill_name: 'Parse Error', activeResults: [] };
+              }
+            }
+          });
+
+          const evals = computed(() => data.value.activeResults || []);
+          const currentEval = computed(() => evals.value.find((e) => e.id === currentEvalId.value));
+
+          const totalEvals = computed(() => evals.value.length);
+          const passedEvals = computed(() => evals.value.filter((e) => e.passed).length);
+          const passRate = computed(() =>
+            totalEvals.value ? Math.round((passedEvals.value / totalEvals.value) * 100) : 0
+          );
+
+          const copyCommand = () => {
+            const cmd = `gemini apply-skill-evolver --skill ${data.value.skill_name} --iteration ${data.value.iteration || 1}`;
+            navigator.clipboard.writeText(cmd);
+            alert('Command copied to clipboard!');
+          };
+
+          const approveIteration = async () => {
+            try {
+              const url = `http://localhost:8080/approve?token=${SESSION_TOKEN}`;
+              const response = await fetch(url);
+              if (response.ok) {
+                alert('Security Token Verified. Iteration approved!');
+              } else {
+                alert('Security Verification Failed. Approval rejected.');
+              }
+            } catch (e) {
+              console.error('Error sending approval:', e);
+              alert('Error communicating with the CLI. Security token could not be verified.');
+            }
+          };
+
+          return {
+            data,
+            evals,
+            currentEvalId,
+            currentEval,
+            totalEvals,
+            passRate,
+            showDiff,
+            copyCommand,
+            approveIteration,
+          };
+        },
+      }).mount('#app');
+    </script>
+  </body>
+</html>
