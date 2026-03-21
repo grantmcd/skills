@@ -3,22 +3,42 @@ import json
 import os
 import sys
 import datetime
+import argparse
 
 # Paths
 ROOT_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_PATH = os.path.join(ROOT_DIR, "scripts", "launches_cache.json")
-OUTPUT_PATH = os.path.join(ROOT_DIR, "ui", "review_data.json")
+DIST_DIR = os.path.join(ROOT_DIR, 'dist')
+os.makedirs(DIST_DIR, exist_ok=True)
 
-def generate_review_data():
+DATA_PATH = os.path.join(DIST_DIR, "launches_cache.json")
+OUTPUT_PATH = os.path.join(DIST_DIR, "review_data.json")
+TEMPLATE_PATH = os.path.join(ROOT_DIR, "ui", "viewer.template.html")
+FINAL_HTML_PATH = os.path.join(DIST_DIR, "viewer.html")
+
+def generate_review_data(agency_filter=None, search_filter=None):
     if not os.path.exists(DATA_PATH):
-        print("No launch data found. Fetch data first.")
-        sys.exit(1)
+        # As a fallback, try to find the cache in the old location
+        old_cache_path = os.path.join(ROOT_DIR, "scripts", "launches_cache.json")
+        if not os.path.exists(old_cache_path):
+            print("No launch data found. Fetch data first.")
+            sys.exit(1)
+        # If we find it, we'll use it for this run
+        with open(old_cache_path, "r") as f:
+            raw_data = json.load(f)
+    else:
+        with open(DATA_PATH, "r") as f:
+            raw_data = json.load(f)
 
-    with open(DATA_PATH, "r") as f:
-        raw_data = json.load(f)
+
+    # Apply filters
+    results = raw_data.get("results", [])
+    if agency_filter:
+        results = [l for l in results if agency_filter.lower() in l.get("launch_service_provider", {}).get("name", "").lower()]
+    if search_filter:
+        results = [l for l in results if search_filter.lower() in l.get("name", "").lower() or search_filter.lower() in l.get("mission", {}).get("description", "").lower()]
 
     launches = []
-    for launch in raw_data.get("results", []):
+    for launch in results:
         rocket_data = launch.get("rocket", {})
         launcher_stages = rocket_data.get("launcher_stage", [])
         is_reused = False
@@ -48,22 +68,35 @@ def generate_review_data():
         })
 
     review_data = {
-        "title": "Upcoming Global Space Launches",
+        "title": f"Upcoming {'SpaceX ' if agency_filter and 'spacex' in agency_filter.lower() else ''}Space Launches",
         "timestamp": datetime.datetime.now().isoformat(),
         "launches": launches
     }
 
-    # Write review data
+    # Write review data JSON
     with open(OUTPUT_PATH, "w") as f:
         json.dump(review_data, f, indent=4)
     
-    # Embed into viewer.html for self-contained usage
-    template_path = os.path.join(ROOT_DIR, "ui", "viewer.html")
-    # Need a fresh template to replace {{DATA}}
-    # For now, we'll just rewrite the file based on our previous template
-    # but with the real data injected.
-    
-    print(f"Review data generated at {OUTPUT_PATH}")
+    # Inject into viewer.html
+    if os.path.exists(TEMPLATE_PATH):
+        with open(TEMPLATE_PATH, "r") as f:
+            template = f.read()
+        
+        final_html = template.replace("const data = {{DATA}};", f"const data = {json.dumps(review_data, indent=4)};")
+        
+        with open(FINAL_HTML_PATH, "w") as f:
+            f.write(final_html)
+        print(f"Final dashboard generated at {FINAL_HTML_PATH}")
+    else:
+        # Fallback if template is missing
+        print(f"Warning: Template not found at {TEMPLATE_PATH}")
+        print(f"Review data JSON generated at {OUTPUT_PATH}")
+
 
 if __name__ == "__main__":
-    generate_review_data()
+    parser = argparse.ArgumentParser(description="Generate review data for the Space Tracker UI.")
+    parser.add_argument("--agency", help="Filter by agency name")
+    parser.add_argument("--search", help="Search in mission name or description")
+    args = parser.parse_args()
+    
+    generate_review_data(agency_filter=args.agency, search_filter=args.search)

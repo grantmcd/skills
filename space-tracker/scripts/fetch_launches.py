@@ -2,14 +2,17 @@
 import json
 import os
 import urllib.request
+import argparse
 from datetime import datetime, timedelta
 
 # Paths
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
-CACHE_FILE = os.path.join(SCRIPT_DIR, "launches_cache.json")
-CACHE_EXPIRY_MINUTES = 60
-API_URL = "https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=10&mode=detailed"
+DIST_DIR = os.path.join(SCRIPT_DIR, '..', 'dist')
+os.makedirs(DIST_DIR, exist_ok=True)
 
+CACHE_FILE = os.path.join(DIST_DIR, "launches_cache.json")
+CACHE_EXPIRY_MINUTES = 60
+API_URL = "https://ll.thespacedevs.com/2.2.0/launch/upcoming/?limit=50&mode=detailed"
 def fetch_launches():
     # Check cache
     if os.path.exists(CACHE_FILE):
