@@ -48,6 +48,13 @@ To evaluate results objectively, generate a static HTML review page.
 - **Description Tuning**: Optimize the `description` in frontmatter to ensure accurate triggering.
 - **Packaging**: Once finalized, create a `.skill` package if the platform supports it.
 
+## 6. Publishing to skills.sh
+To ensure skills are discoverable and compatible with the broader agent ecosystem:
+- **Repository Structure**: Each skill MUST be in its own directory at the root of the repository (e.g., `my-repo/my-skill/SKILL.md`).
+- **Naming**: Directory names and the `name` field in frontmatter MUST be lowercase, using only letters, numbers, and hyphens (e.g., `data-extractor`).
+- **Discoverability**: The `description` is the primary metadata for `skills.sh`. Ensure it contains clear keywords and scenarios.
+- **Publication**: Once the repository is public on GitHub, it can be shared via `npx skills add <username>/<repo-name>`.
+
 ---
 
 ## Reporting & Feedback
