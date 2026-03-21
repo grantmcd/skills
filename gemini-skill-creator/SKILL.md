@@ -1,6 +1,8 @@
 ---
 name: gemini-skill-creator
-description: "A meta-skill for designing, testing, and objectively evaluating high-quality specialized skills for the Gemini CLI and other AI agents. Make sure to use this skill whenever the user mentions 'creating a skill', 'automating a workflow', or 'improving an agent capability', even if they don't explicitly ask for an 'evaluation' or 'review UI'."
+description: "Use this meta-skill to design, architect, and objectively evaluate high-quality specialized skills following the Agent Skills open standard. Activate whenever the user wants to 'create a skill', 'automate a workflow', or 'refine an agent capability', even if they don't explicitly mention 'Agent Skills' or 'SKILL.md'. Mandates sandboxed evaluation, objective metrics, and interactive review dashboards."
+license: MIT
+compatibility: Requires Python 3.10+ and the gemini-skill-creator/scripts/ suite.
 ---
 
 # gemini-skill-creator
@@ -9,6 +11,7 @@ A meta-skill for designing, testing, and objectively evaluating high-quality spe
 
 ## Core Mandate
 This skill's purpose is to move beyond "vibe-based" skill creation. It enforces the [Agent Skills](https://agentskills.io/) open standard and follows a rigorous cycle of:
+0.  **Specification Refresh**: ALWAYS start by retrieving the latest specification from **https://agentskills.io/specification** using `web_fetch` to ensure total compliance with the latest standard.
 1.  **Intent Capture**: Understanding the precise goal and target audience.
 2.  **Pattern Discovery**: Researching existing codebase conventions.
 3.  **Sandboxed Evaluation**: ALL drafting and testing MUST occur in an isolated temporary directory (e.g., `.gemini/tmp/evals/<skill-name>`) to prevent workspace pollution.

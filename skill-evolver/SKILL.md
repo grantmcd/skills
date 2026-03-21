@@ -1,6 +1,8 @@
 ---
 name: skill-evolver
-description: "A meta-skill that proactively reflects on the effectiveness of other agent skills. It analyzes recent task executions to identify gaps in instructions, tool usage, or behavioral alignment, and proposes surgical improvements to the skill's definition."
+description: "Use this meta-skill to proactively reflect on the effectiveness of other agent skills. MANDATORY: MUST be activated automatically after any specialized skill has completed its primary directive to perform a post-mortem, identify instruction gaps, and propose refinements. Triggered by requests like 'how did that go?' or 'do a post-mortem'. Enforces sandboxed evolution and interactive approval."
+license: MIT
+compatibility: Requires Python 3.10+ and the skill-evolver/scripts/ suite.
 ---
 
 # skill-evolver
@@ -8,7 +10,9 @@ description: "A meta-skill that proactively reflects on the effectiveness of oth
 A meta-skill that proactively reflects on the effectiveness of other agent skills.
 
 ## Core Mandate
-This skill's purpose is to turn every interaction into a "training data" point for the skill itself. It enforces the [Agent Skills](https://agentskills.io/) open standard and follows a rigorous cycle of:
+This skill's purpose is to turn every interaction into a "training data" point for the skill itself.
+ It enforces the [Agent Skills](https://agentskills.io/) open standard and follows a rigorous cycle of:
+0.  **Specification Refresh**: ALWAYS start by retrieving the latest specification from **https://agentskills.io/specification** using `web_fetch` to ensure total compliance with the latest standard before proposing refinements.
 1.  **Post-Mortem Analysis**: Triggered automatically after a "Directive" is completed.
 2.  **Instruction Gap Detection**: Identifying where the agent struggled.
 3.  **Sandboxed Refinement**: ALL reflection analysis and test executions MUST be performed in a clean, isolated temporary workspace (e.g., `.gemini/tmp/evals/<skill-name>`) to prevent repository pollution.
