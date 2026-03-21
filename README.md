@@ -1,15 +1,23 @@
 # Agent Skills
 
-A collection of specialized skills for the Gemini CLI and interactive agents.
+A collection of specialized, high-quality skills for the Gemini CLI and other AI agents.
 
-## Contents
-- [gemini-skill-creator](./gemini-skill-creator): A meta-skill for building new Gemini CLI capabilities.
+## Core Skills
+- [**gemini-skill-creator**](./gemini-skill-creator): A powerful meta-skill for designing, testing, and objectively evaluating new agent capabilities. It features an automated evaluation framework and a static review UI.
 
-## Usage
-To use these skills, you can download the `.skill` file or clone this repository and point your agent to the local `SKILL.md`.
+## Why this Repository?
+Agent skills should be more than just instructions. They should be:
+- **Testable**: Verified against real-world prompts.
+- **Performant**: Optimized for token usage and execution speed.
+- **Collaborative**: Open for review and improvement by the community.
 
-## Safety
-These skills are designed to be "infrastructure-as-code" friendly and prioritize security by:
-- Preferring Kubernetes Secrets over hardcoded credentials.
-- Separating configuration from code.
-- Using standardized MCP and CLI tools.
+## How to use the Gemini Skill Creator
+1.  **Draft**: Use the skill to capture intent and research patterns.
+2.  **Evaluate**: Run parallel tests using the `generalist` tool.
+3.  **Review**: Analyze the generated `review.html` to see how the skill performs against a baseline.
+4.  **Refine**: Sharpen instructions based on objective feedback.
+
+## Safety & Security
+- **No Secrets**: We never commit API keys, passwords, or sensitive credentials.
+- **Isolated Tests**: Evaluation runs are performed in isolated workspace directories.
+- **Standardized Tools**: We prioritize the use of standard, well-documented CLI and MCP tools.
