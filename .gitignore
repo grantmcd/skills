@@ -1,3 +1,9 @@
+# Build artifacts
+.dist/
+
+# Python
+__pycache__/
+
 .env
 *.log
 node_modules/
