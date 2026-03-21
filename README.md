@@ -3,7 +3,8 @@
 A collection of specialized, high-quality skills for the Gemini CLI and other AI agents.
 
 ## Core Skills
-- [**gemini-skill-creator**](./gemini-skill-creator): A powerful meta-skill for designing, testing, and objectively evaluating new agent capabilities. It features an automated evaluation framework and a static review UI.
+- [**gemini-skill-creator**](./gemini-skill-creator): A meta-skill for designing, testing, and objectively evaluating high-quality specialized skills.
+- [**skill-evolver**](./skill-evolver): A proactive meta-skill that reflects on task execution to surgically refine other skills through automated friction capture and secure review.
 
 ## Why this Repository?
 Agent skills should be more than just instructions. They should be:

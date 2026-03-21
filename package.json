@@ -1,0 +1,12 @@
+{
+  "name": "@grantmcd/skills",
+  "version": "1.0.0",
+  "description": "A collection of specialized, high-quality, and objectively evaluated skills for AI agents.",
+  "devDependencies": {
+    "prettier": "^3.8.1"
+  },
+  "scripts": {
+    "format": "prettier --write \"**/ui/*.html\"",
+    "check": "prettier --check \"**/ui/*.html\""
+  }
+}

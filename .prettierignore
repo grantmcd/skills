@@ -1,0 +1,6 @@
+node_modules/
+package-lock.json
+*.png
+approval_signal.txt
+session_token.txt
+review.html
