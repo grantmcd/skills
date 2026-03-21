@@ -1,6 +1,6 @@
 # Agent Skills
 
-A collection of specialized, high-quality, and objectively evaluated skills for AI agents. These skills follow the [Agent Skills](https://skills.sh) open standard and are compatible with **Claude Code**, **GitHub Copilot**, **Gemini CLI**, **Kiro**, and other modern AI coding tools.
+A collection of specialized, high-quality, and objectively evaluated skills for AI agents. These skills follow the [Agent Skills](https://skills.sh) open standard managed by the [skills CLI](https://github.com/vercel-labs/skills) and are compatible with **Claude Code**, **GitHub Copilot**, **Gemini CLI**, **Kiro**, and other modern AI coding tools.
 
 ## 🛠 Core Meta-Skills
 
@@ -14,7 +14,7 @@ This repository features two powerful meta-skills designed to help you build and
 ## 🚀 Installation
 
 ### 1. Universal Method (Recommended)
-The easiest way to install these skills across all your agents simultaneously is using the `skills` CLI:
+The easiest way to install these skills across all your agents simultaneously is using the [skills CLI](https://github.com/vercel-labs/skills):
 
 ```bash
 # Install the Skill Creator
@@ -23,6 +23,8 @@ npx skills add grantmcd/skills/gemini-skill-creator
 # Install the Skill Evolver
 npx skills add grantmcd/skills/skill-evolver
 ```
+
+Explore more skills at [skills.sh](https://skills.sh).
 
 ### 2. Tool-Specific Usage
 
