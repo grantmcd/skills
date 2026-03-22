@@ -6,7 +6,10 @@
     "prettier": "^3.8.1"
   },
   "scripts": {
-    "format": "prettier --write \"**/ui/*.html\"",
-    "check": "prettier --check \"**/ui/*.html\""
+    "lint": "ruff check .",
+    "lint:fix": "ruff check --fix .",
+    "format": "ruff format . && prettier --write \"**/ui/*.html\"",
+    "format:check": "ruff format --check . && prettier --check \"**/ui/*.html\"",
+    "test": "npm run lint && npm run format:check"
   }
 }

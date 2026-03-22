@@ -24,7 +24,7 @@ We strongly recommend using the meta-skills in this repository during developmen
 Before submitting your contribution:
 - **Run Quality Checks**: Ensure your code passes the unified quality gate:
   ```bash
-  ./check.sh
+  npm test
   ```
 - **Remove Temporary Artifacts**: **Do NOT commit `evals/`, `results.json`, or `review.html` files.** These are temporary artifacts used during the development lifecycle. The final submission should only include the refined `SKILL.md` and any essential supporting scripts.
 

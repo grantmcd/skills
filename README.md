@@ -55,9 +55,15 @@ This repository uses a rigorous automated quality gate to ensure all skills and 
 - **UI Formatting**: Powered by [Prettier](https://prettier.io).
 - **CI/CD**: GitHub Actions runs a unified quality check on every push.
 
-To run checks locally:
+To run quality checks locally:
 ```bash
-./check.sh
+npm test
+```
+
+To fix formatting and linting issues separately:
+```bash
+npm run format
+npm run lint:fix
 ```
 
 ---
